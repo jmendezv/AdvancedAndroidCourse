@@ -1,7 +1,8 @@
-package org.gencat.docents
+package org.gencat.docents.home
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import org.gencat.docents.R
 
 class MainActivity : AppCompatActivity() {
 
