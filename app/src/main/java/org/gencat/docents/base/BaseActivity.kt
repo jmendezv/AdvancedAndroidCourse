@@ -11,6 +11,7 @@ import com.bluelinelabs.conductor.Router
 import org.gencat.docents.R
 import org.gencat.docents.di.Injector
 import org.gencat.docents.di.ScreenInjector
+import org.gencat.docents.ui.ScreenNavigator
 import java.util.*
 import javax.inject.Inject
 
@@ -26,6 +27,9 @@ abstract class BaseActivity : AppCompatActivity() {
     @Inject
     lateinit var screenInjector: ScreenInjector
 
+    @Inject
+    lateinit var screenNavigator: ScreenNavigator
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         instanceId = savedInstanceState?.run {
@@ -38,6 +42,7 @@ abstract class BaseActivity : AppCompatActivity() {
         screenContainer
                 ?: throw NullPointerException("Activity must have a view with id: 'screen_container'")
         router = Conductor.attachRouter(this, screenContainer, savedInstanceState)
+        screenNavigator.initWithRouter(router, initialScreen())
         monitorBackStack()
         super.onCreate(savedInstanceState)
     }
@@ -73,8 +78,18 @@ abstract class BaseActivity : AppCompatActivity() {
         })
     }
 
+    override fun onBackPressed() {
+        /* If the screenNavigator did not handle the pop() */
+        if (!screenNavigator.pop()) {
+            super.onBackPressed()
+        }
+    }
+
     @LayoutRes
     protected abstract fun layoutRes(): Int
+
+    /* All implementing classes will have to set root controller (initial fragment) */
+    protected abstract fun initialScreen(): Controller
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
@@ -82,6 +97,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        screenNavigator.clear()
         super.onDestroy()
         if (isFinishing) Injector.clearComponent(this)
     }

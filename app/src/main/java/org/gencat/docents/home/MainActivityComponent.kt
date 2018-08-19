@@ -4,10 +4,14 @@ import dagger.Subcomponent
 import dagger.android.AndroidInjector
 import org.gencat.docents.di.ActivityScope
 import org.gencat.docents.di.AndroidInjectorBuilder
+import org.gencat.docents.ui.NavigationModule
 
 @ActivityScope
 // It will be built on top of our Application Component
-@Subcomponent(modules = [MainScreenBindingModule::class])
+@Subcomponent(modules = [
+    MainScreenBindingModule::class,
+    NavigationModule::class
+])
 /*
 * Performs members-injection for a concrete subtype of a core Android type
 *
