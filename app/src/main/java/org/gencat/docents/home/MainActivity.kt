@@ -1,13 +1,10 @@
 package org.gencat.docents.home
 
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
 import org.gencat.docents.R
+import org.gencat.docents.base.BaseActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-    }
+    override fun layoutRes(): Int = R.layout.activity_main
+
 }

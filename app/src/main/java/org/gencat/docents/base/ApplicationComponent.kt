@@ -1,6 +1,7 @@
 package org.gencat.docents.base
 
 import dagger.Component
+import org.gencat.docents.home.MainScreenBindingModule
 
 /*
 * A Dagger Component is the object that actually injects classes.
