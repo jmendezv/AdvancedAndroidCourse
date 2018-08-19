@@ -8,7 +8,8 @@ import dagger.Provides
 * This class is a provider of dependencies
 * */
 @Module
-class ApplicationModule public constructor(private val application: Application) {
+class ApplicationModule constructor(
+        private val application: Application) {
 
     @Provides
     fun provideApplicationContext() = application

@@ -12,6 +12,11 @@ import dagger.Component
 *
 * The lifecycle is essentially the lifecycle of the app.
 * */
-@Component(modules = [ApplicationModule::class])
+@Component(modules = [
+    ApplicationModule::class,
+    ActivityBindingModule::class])
 interface ApplicationComponent {
+
+    fun inject(myApplication: MyApplication)
+
 }

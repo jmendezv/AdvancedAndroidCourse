@@ -10,7 +10,7 @@ import org.gencat.docents.home.MainActivity
 import org.gencat.docents.home.MainActivityComponent
 
 @Module(subcomponents = [MainActivityComponent::class])
-abstract class ActvityBindingModule {
+abstract class ActivityBindingModule {
 
     /* @Binds provides a replacement of @Provides methods which simply return the function's argument */
 
