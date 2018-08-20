@@ -59,6 +59,5 @@ class TrendingReposViewModel @Inject constructor() {
         }
     }
 
-    // S4/L23/6'24''
 
 }
