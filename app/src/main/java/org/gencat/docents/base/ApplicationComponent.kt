@@ -1,7 +1,9 @@
 package org.gencat.docents.base
 
 import dagger.Component
+import org.gencat.docents.data.RepoServiceModule
 import org.gencat.docents.home.MainScreenBindingModule
+import org.gencat.docents.networking.ServiceModule
 
 /*
 * A Dagger Component is the object that actually injects classes.
@@ -15,7 +17,9 @@ import org.gencat.docents.home.MainScreenBindingModule
 * */
 @Component(modules = [
     ApplicationModule::class,
-    ActivityBindingModule::class])
+    ActivityBindingModule::class,
+    ServiceModule::class,
+    RepoServiceModule::class])
 interface ApplicationComponent {
 
     fun inject(myApplication: MyApplication)
