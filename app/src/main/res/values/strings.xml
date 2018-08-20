@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Docents</string>
+    <string name="api_error_repos">Error loading repos</string>
 </resources>
