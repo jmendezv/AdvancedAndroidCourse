@@ -4,6 +4,7 @@ import dagger.Component
 import org.gencat.docents.data.RepoServiceModule
 import org.gencat.docents.home.MainScreenBindingModule
 import org.gencat.docents.networking.ServiceModule
+import javax.inject.Singleton
 
 /*
 * A Dagger Component is the object that actually injects classes.
@@ -15,6 +16,7 @@ import org.gencat.docents.networking.ServiceModule
 *
 * The lifecycle is essentially the lifecycle of the app.
 * */
+@Singleton
 @Component(modules = [
     ApplicationModule::class,
     ActivityBindingModule::class,

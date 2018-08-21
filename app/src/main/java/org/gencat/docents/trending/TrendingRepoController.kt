@@ -1,5 +1,6 @@
 package org.gencat.docents.trending
 
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
@@ -24,6 +25,11 @@ class TrendingRepoController : BaseController() {
     @BindView(R.id.tv_error)
     lateinit var errorText: TextView
 
+    override fun onViewBound(view: View) {
+        repoList.layoutManager = LinearLayoutManager(view.context)
+        repoList.adapter = RepoAdapter(presenter)
+    }
+
     override fun subscriptions(): Array<Disposable> =
             arrayOf(
                     viewModel.getLoading()
@@ -32,7 +38,23 @@ class TrendingRepoController : BaseController() {
                                 loadingView.visibility = if (it) View.VISIBLE else View.GONE
                                 repoList.visibility = if (it) View.GONE else View.VISIBLE
                                 errorText.visibility = if (it) View.GONE else errorText.visibility
-                            } // TODO
+                            },
+                    viewModel.getRepos()
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe((repoList.adapter as RepoAdapter)::setData),
+                viewModel.getError()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe {
+                            if (it.toInt() == -1) {
+                                errorText.setText(null)
+                                errorText.visibility = View.GONE
+                            }
+                            else {
+                                errorText.visibility = View.VISIBLE
+                                repoList.visibility = View.GONE
+                                errorText.setText(it.toInt())
+                            }
+                        }
             )
 
     override fun layoutRes(): Int = R.layout.screen_trending_repos

@@ -25,7 +25,7 @@ import javax.inject.Inject
 * method on the disposable object to prevent possible memory leaks.
 *
 * */
-class RepoRequester(@Inject val service: RepoService) {
+class RepoRequester @Inject constructor(val service: RepoService) {
 
     fun getTrendingRepos(): Single<List<Repo>> =
             service.getTrendingRepos()

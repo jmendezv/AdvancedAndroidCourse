@@ -13,4 +13,5 @@ interface RepoService {
 
     @GET("search/repositories?q=language:java&order=desc&sort=stars")
     fun getTrendingRepos(): Single<TrendingReposResponse>
+
 }

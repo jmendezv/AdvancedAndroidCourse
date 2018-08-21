@@ -36,30 +36,21 @@ dependencies {
 
     implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "com.google.dagger:dagger-android:$daggerVersion"
-    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
-    // Annotation processor do not need to be included in the final
-    // annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
-    // annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    //implementation "com.google.dagger:dagger-android-support:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
-    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+    //kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
     // Moshi from Square Json serialization/deserialization like Gson
     implementation "com.squareup.moshi:moshi:$moshiVersion"
-    annotationProcessor "com.ryanharter.auto.value:auto-value-moshi:$autoValueMoshiVersion"
-    // Used only during the built phase of the project
-    compileOnly "com.ryanharter.auto.value:auto-value-moshi-annotations:$autoValueMoshiVersion"
 
     implementation "com.squareup.moshi:moshi-kotlin:$moshiKotlinVersion"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiKotlinVersion"
 
     implementation "se.ansman.kotshi:api:$kotshiVersion"
     kapt "se.ansman.kotshi:compiler:$kotshiVersion"
-
-    compileOnly "com.google.auto.value:auto-value:$autoValueVersion"
-    annotationProcessor "com.google.auto.value:auto-value:$autoValueVersion"
 
     implementation "com.jakewharton.threetenabp:threetenabp:$threeTenAbpVersion"
 
@@ -73,7 +64,7 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$timberVersion"
 
     implementation "com.jakewharton:butterknife:$butterknifeVersion"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
+    kapt "com.jakewharton:butterknife-compiler:$butterknifeVersion"
 
     testImplementation "junit:junit:$jUnitVersion"
     androidTestImplementation "com.android.support.test:runner:$runnerVersion"

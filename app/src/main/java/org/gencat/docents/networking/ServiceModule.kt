@@ -29,6 +29,7 @@ class ServiceModule {
                     .callFactory(callFactory)
                     .addConverterFactory(MoshiConverterFactory.create(moshi))
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .baseUrl(baseUrl)
                     .build()
 
 }
