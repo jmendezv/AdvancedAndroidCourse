@@ -6,6 +6,7 @@ import org.gencat.docents.model.Repo
 import javax.inject.Inject
 
 @ScreenScope
+
 class TrendingReposPresenter @Inject constructor(val viewModel: TrendingReposViewModel, val repoRequester: RepoRequester):
 RepoAdapter.RepoClickedListener{
 
