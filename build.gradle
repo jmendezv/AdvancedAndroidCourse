@@ -34,7 +34,6 @@ ext {
     daggerVersion = '2.15'
     retrofitVersion = '2.3.0'
     moshiVersion = '1.5.0'
-    autoValueVersion = '1.5.1'
     autoValueMoshiVersion = '0.4.3'
     threeTenAbpVersion = '1.0.5'
     rxJavaVersion = '2.1.4'
@@ -48,6 +47,7 @@ ext {
     espressoVersion = '3.0.2'
     moshiKotlinVersion = '1.6.0'
     kotshiVersion = '1.0.4'
+    mockitoVersion = '2.10.0'
 }
 
 task clean(type: Delete) {
