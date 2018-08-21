@@ -6,6 +6,7 @@ import javax.inject.Inject
 
 @ScreenScope
 class TrendingReposPresenter @Inject constructor(val viewModel: TrendingReposViewModel, val repoRequester: RepoRequester) {
+
     init {
         loadRepos()
     }
@@ -15,7 +16,11 @@ class TrendingReposPresenter @Inject constructor(val viewModel: TrendingReposVie
                 .doOnSubscribe {
                     viewModel.setLoading().accept(true)
                 }
-                .doOnEvent { data, throwable -> viewModel.setLoading().accept(false) }
+                // on any event
+                .doOnEvent {
+                    data, throwable -> viewModel.setLoading().accept(false)
+                }
+                // onSuccess(), onError()
                 .subscribe(viewModel.setRepos(), viewModel.onError())
     }
 

@@ -24,6 +24,7 @@ import javax.inject.Inject
 @ScreenScope
 class TrendingReposViewModel @Inject constructor() {
 
+    /* BehaviourRelay extends io.reactivex.Observable<T> */
     /* We need three relays to hold the state of this ViewModel */
     private val reposRelay = BehaviorRelay.create<List<Repo>>()
     /* String resource as integer */

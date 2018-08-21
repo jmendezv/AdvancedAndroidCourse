@@ -1,10 +1,15 @@
 package org.gencat.docents.base
 
 import android.content.Context
+import android.support.annotation.LayoutRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import butterknife.ButterKnife
+import butterknife.Unbinder
 import com.bluelinelabs.conductor.Controller
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import org.gencat.docents.di.Injector
 
 /*
@@ -12,7 +17,10 @@ import org.gencat.docents.di.Injector
 * */
 abstract class BaseController : Controller() {
 
-    var injected = false
+    /* Allows to add multiple disposables and to dispose() all of them at once */
+    private val disposables: CompositeDisposable = CompositeDisposable()
+    private var injected = false
+    private var unbinder: Unbinder? = null
 
     /*
     * Called when this Controller has a Context available to it.
@@ -28,5 +36,31 @@ abstract class BaseController : Controller() {
         }
         super.onContextAvailable(context)
     }
+
+    final override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+        val view = inflater.inflate(layoutRes(), container, false)
+        unbinder = ButterKnife.bind(this, view)
+        onViewBound(view)
+        disposables.addAll(*subscriptions())
+        return view
+    }
+
+    override fun onDestroyView(view: View) {
+        super.onDestroyView(view)
+        disposables.clear()
+        unbinder?.run {
+            unbind()
+            unbinder = null
+        }
+    }
+
+    protected open fun onViewBound(view: View): Unit {
+
+    }
+
+    protected open fun subscriptions(): Array<Disposable> = arrayOf()
+
+    @LayoutRes
+    protected abstract fun layoutRes(): Int
 
 }
