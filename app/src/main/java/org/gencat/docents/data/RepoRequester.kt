@@ -2,6 +2,7 @@ package org.gencat.docents.data
 
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import org.gencat.docents.model.Contributor
 import org.gencat.docents.model.Repo
 import org.gencat.docents.model.TrendingReposResponse
 import javax.inject.Inject
@@ -30,9 +31,13 @@ class RepoRequester @Inject constructor(val service: RepoService) {
     fun getTrendingRepos(): Single<List<Repo>> =
             service.getTrendingRepos()
                     .map(TrendingReposResponse::repos)
-                    .subscribeOn(Schedulers.io())
+                    //.subscribeOn(Schedulers.io())
 
     fun getTrendingRepo(repoName: String, repoOwner: String): Single<Repo> =
             service.getTrendingRepo(repoName, repoOwner)
-                    .subscribeOn(Schedulers.io())
+                    //.subscribeOn(Schedulers.io())
+
+    fun getContributors(url: String): Single<List<Contributor>> =
+            service.getContributors(url)
+                    //.subscribeOn(Schedulers.io())
 }

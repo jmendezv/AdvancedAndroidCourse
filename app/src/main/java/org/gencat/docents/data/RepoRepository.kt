@@ -2,6 +2,8 @@ package org.gencat.docents.data
 
 import io.reactivex.Maybe
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
+import org.gencat.docents.model.Contributor
 import org.gencat.docents.model.Repo
 import javax.inject.Inject
 import javax.inject.Provider
@@ -11,6 +13,7 @@ import javax.inject.Singleton
 class RepoRepository @Inject constructor(val repoRequesterProvider: Provider<RepoRequester>) {
 
     private val cachedTrendingRepos = mutableListOf<Repo>()
+    private val cachedContributors: MutableMap<String, List<Contributor>> = mutableMapOf()
 
     /*
     * If cachedTrendingRepos() method call succeeds
@@ -22,11 +25,35 @@ class RepoRepository @Inject constructor(val repoRequesterProvider: Provider<Rep
             Maybe.concat(cachedTrendingRepos(),
                     apiTrendingRepos())
                     .firstOrError()
+                    .subscribeOn(Schedulers.io())
 
     fun getTrendingRepo(repoName: String, repoOwner: String): Single<Repo> =
             Maybe.concat(cachedRepo(repoName, repoOwner)
                     , apiRepo(repoName, repoOwner))
                     .firstOrError()
+                    .subscribeOn(Schedulers.io())
+
+    fun getContributors(url: String): Single<List<Contributor>> =
+            Maybe.concat(cachedContributors(url),
+                    apiContributors(url))
+                    .firstOrError()
+                    .subscribeOn(Schedulers.io())
+
+    private fun cachedContributors(url: String): Maybe<List<Contributor>> =
+            Maybe.create<List<Contributor>> {
+                if (cachedContributors.containsKey(url)) {
+                    it.onSuccess(cachedContributors[url]!!)
+                }
+                it.onComplete()
+            }
+
+    private fun apiContributors(url: String): Maybe<List<Contributor>> =
+            repoRequesterProvider.get()
+                    .getContributors(url)
+                    .doOnSuccess {
+                        cachedContributors[url] = it
+                    }
+                    .toMaybe()
 
     private fun cachedTrendingRepos() =
             Maybe.create<List<Repo>> {

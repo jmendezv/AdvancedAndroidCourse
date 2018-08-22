@@ -53,12 +53,12 @@ class TrendingReposViewModel @Inject constructor() {
         return reposRelay
     }
 
-    fun onError(): Consumer<Throwable> {
-        return Consumer {
+    fun onError(): Consumer<Throwable> =
+        Consumer {
             Timber.e(it, "Error loading repos")
             errorRelay.accept(Integer(R.string.api_error_repos))
         }
-    }
+
 
 
 }
