@@ -7,6 +7,8 @@ data class ContributorState public constructor(
         val contributors: List<Contributor>? = null,
         val errorRes: Int = -1) {
 
+    fun isSuccess(): Boolean = errorRes == -1
+
     class Builder {
         private var loading: Boolean = false
         private var contributors: List<Contributor>? = null

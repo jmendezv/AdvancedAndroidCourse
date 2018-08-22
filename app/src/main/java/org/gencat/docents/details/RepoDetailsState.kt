@@ -8,6 +8,9 @@ data class RepoDetailsState constructor(val loading: Boolean = false,
                                         val updatedDate: String? = null,
                                         val errorRes: Int = -1) {
 
+    fun isSuccess(): Boolean = errorRes == -1
+
+
     class Builder {
         private var loading: Boolean = false
         private var name: String? = null

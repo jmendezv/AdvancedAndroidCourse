@@ -54,9 +54,9 @@ internal class ContributorAdapter : RecyclerView.Adapter<ContributorAdapter.Cont
      class ContributorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         @BindView(R.id.tv_user_name)
-        var usernameText: TextView? = null
+        lateinit var usernameText: TextView
         @BindView(R.id.iv_avatar)
-        var avatarImageView: ImageView? = null
+        lateinit var avatarImageView: ImageView
 
         init {
             ButterKnife.bind(this, itemView)
