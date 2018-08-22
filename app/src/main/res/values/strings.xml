@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Docents</string>
     <string name="api_error_repos">Error loading repos</string>
+    <string name="creation_date_label">Created:</string>
+    <string name="updated_date_label">Last Updated:</string>
+    <string name="contributors_label">Contributors:</string>
 </resources>

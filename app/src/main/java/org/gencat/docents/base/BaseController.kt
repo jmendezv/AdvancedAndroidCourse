@@ -1,6 +1,7 @@
 package org.gencat.docents.base
 
 import android.content.Context
+import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,7 @@ import org.gencat.docents.di.Injector
 /*
 * Controller (Light weight Activity/Fragment) instances are retain across config changes
 * */
-abstract class BaseController : Controller() {
+abstract class BaseController(bundle: Bundle? = null) : Controller(bundle) {
 
     /* Allows to add multiple disposables and to dispose() all of them at once */
     private val disposables: CompositeDisposable = CompositeDisposable()
