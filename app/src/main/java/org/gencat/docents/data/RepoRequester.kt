@@ -32,4 +32,7 @@ class RepoRequester @Inject constructor(val service: RepoService) {
                     .map(TrendingReposResponse::repos)
                     .subscribeOn(Schedulers.io())
 
+    fun getTrendingRepo(repoName: String, repoOwner: String): Single<Repo> =
+            service.getTrendingRepo(repoName, repoOwner)
+                    .subscribeOn(Schedulers.io())
 }
