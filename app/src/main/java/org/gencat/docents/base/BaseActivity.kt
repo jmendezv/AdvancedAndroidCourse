@@ -37,6 +37,7 @@ abstract class BaseActivity : AppCompatActivity() {
         } ?: UUID.randomUUID().toString()
 
         Injector.inject(this)
+        super.onCreate(savedInstanceState)
         setContentView(layoutRes())
         val screenContainer = findViewById<ViewGroup>(R.id.screen_container)
         screenContainer
@@ -44,7 +45,7 @@ abstract class BaseActivity : AppCompatActivity() {
         router = Conductor.attachRouter(this, screenContainer, savedInstanceState)
         screenNavigator.initWithRouter(router, initialScreen())
         monitorBackStack()
-        super.onCreate(savedInstanceState)
+
     }
 
     private fun monitorBackStack() {
