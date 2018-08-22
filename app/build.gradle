@@ -66,6 +66,8 @@ dependencies {
     implementation "com.jakewharton:butterknife:$butterknifeVersion"
     kapt "com.jakewharton:butterknife-compiler:$butterknifeVersion"
 
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
     testImplementation "junit:junit:$jUnitVersion"
     androidTestImplementation "com.android.support.test:runner:$runnerVersion"

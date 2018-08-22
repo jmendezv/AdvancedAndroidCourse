@@ -4,11 +4,14 @@ import org.gencat.docents.data.RepoRepository
 import org.gencat.docents.data.RepoRequester
 import org.gencat.docents.di.ScreenScope
 import org.gencat.docents.model.Repo
+import org.gencat.docents.ui.ScreenNavigator
 import javax.inject.Inject
 
 @ScreenScope
 
-class TrendingReposPresenter @Inject constructor(val viewModel: TrendingReposViewModel, val repoRepository: RepoRepository) :
+class TrendingReposPresenter @Inject constructor(val viewModel: TrendingReposViewModel,
+                                                 val repoRepository: RepoRepository,
+                                                 val screenNavigator: ScreenNavigator) :
         RepoAdapter.RepoClickedListener {
 
     init {
@@ -30,7 +33,7 @@ class TrendingReposPresenter @Inject constructor(val viewModel: TrendingReposVie
 
     /* This will take to a detail screen */
     override fun onRepoClicked(repo: Repo) {
-
+        screenNavigator.goToRepoDetails(repo.name, repo.owner.login)
     }
 
 }

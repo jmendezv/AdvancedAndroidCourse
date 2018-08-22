@@ -48,6 +48,7 @@ ext {
     moshiKotlinVersion = '1.6.0'
     kotshiVersion = '1.0.4'
     mockitoVersion = '2.10.0'
+    glideVersion = '4.2.0'
 }
 
 task clean(type: Delete) {
