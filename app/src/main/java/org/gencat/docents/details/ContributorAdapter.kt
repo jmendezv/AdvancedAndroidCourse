@@ -36,7 +36,7 @@ internal class ContributorAdapter : RecyclerView.Adapter<ContributorAdapter.Cont
     }
 
     override fun getItemId(position: Int): Long {
-        return data.get(position).id
+        return data[position].id
     }
 
     fun setData(contributors: List<Contributor>?) {

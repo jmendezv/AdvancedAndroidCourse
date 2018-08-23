@@ -11,6 +11,7 @@ import com.bluelinelabs.conductor.Router
 import org.gencat.docents.R
 import org.gencat.docents.di.Injector
 import org.gencat.docents.di.ScreenInjector
+import org.gencat.docents.lifecycle.ActivityLifeCycleTask
 import org.gencat.docents.ui.ScreenNavigator
 import java.util.*
 import javax.inject.Inject
@@ -30,6 +31,8 @@ abstract class BaseActivity : AppCompatActivity() {
     @Inject
     lateinit var screenNavigator: ScreenNavigator
 
+    @Inject lateinit var activityLifecycleTasks: Set<ActivityLifeCycleTask>
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         instanceId = savedInstanceState?.run {
@@ -45,7 +48,39 @@ abstract class BaseActivity : AppCompatActivity() {
         router = Conductor.attachRouter(this, screenContainer, savedInstanceState)
         screenNavigator.initWithRouter(router, initialScreen())
         monitorBackStack()
+        activityLifecycleTasks.forEach {
+            it.onCreate(this)
+        }
+        super.onCreate(savedInstanceState)
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        activityLifecycleTasks.forEach {
+            it.onStart(this)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        activityLifecycleTasks.forEach {
+            it.onPause(this)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activityLifecycleTasks.forEach {
+            it.onResume(this)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        activityLifecycleTasks.forEach {
+            it.onStop(this)
+        }
     }
 
     private fun monitorBackStack() {
@@ -101,6 +136,9 @@ abstract class BaseActivity : AppCompatActivity() {
         screenNavigator.clear()
         super.onDestroy()
         if (isFinishing) Injector.clearComponent(this)
+        activityLifecycleTasks.forEach {
+            it.onDestroy(this)
+        }
     }
 
 }
