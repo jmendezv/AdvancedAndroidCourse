@@ -18,12 +18,16 @@ import javax.inject.Inject
 
 private const val INSTANCE_ID_KEY = "instance_id"
 
-abstract class BaseActivity : AppCompatActivity() {
+
+/*
+* TODO("12/65")
+* */
+abstract class BaseActivity : AppCompatActivity(), RouterProvider {
 
     lateinit var instanceId: String
         private set
 
-    private lateinit var router: Router
+    private lateinit var localRouter: Router
 
     @Inject
     lateinit var screenInjector: ScreenInjector
@@ -45,8 +49,7 @@ abstract class BaseActivity : AppCompatActivity() {
         val screenContainer = findViewById<ViewGroup>(R.id.screen_container)
         screenContainer
                 ?: throw NullPointerException("Activity must have a view with id: 'screen_container'")
-        router = Conductor.attachRouter(this, screenContainer, savedInstanceState)
-        screenNavigator.initWithRouter(router, initialScreen())
+        localRouter = Conductor.attachRouter(this, screenContainer, savedInstanceState)
         monitorBackStack()
         activityLifecycleTasks.forEach {
             it.onCreate(this)
@@ -84,7 +87,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     private fun monitorBackStack() {
-        router.addChangeListener(object : ControllerChangeHandler.ControllerChangeListener {
+        localRouter.addChangeListener(object : ControllerChangeHandler.ControllerChangeListener {
             override fun onChangeStarted(
                     to: Controller?,
                     from: Controller?,
@@ -124,16 +127,12 @@ abstract class BaseActivity : AppCompatActivity() {
     @LayoutRes
     protected abstract fun layoutRes(): Int
 
-    /* All implementing classes will have to set root controller (initial fragment) */
-    protected abstract fun initialScreen(): Controller
-
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState?.putString(INSTANCE_ID_KEY, instanceId)
     }
 
     override fun onDestroy() {
-        screenNavigator.clear()
         super.onDestroy()
         if (isFinishing) Injector.clearComponent(this)
         activityLifecycleTasks.forEach {
@@ -141,4 +140,5 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
+    override fun getRouter(): Router = localRouter
 }
